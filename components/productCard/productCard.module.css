@@ -1,0 +1,24 @@
+.productCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+    width: calc(300px + 2rem);
+    background-color: darkslategray;
+    border-radius: 25px 25px 20px 20px;
+    padding-bottom: 1rem;
+    color: white;
+}
+
+.imgDiv {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 20px 20px 0 0;
+    width: calc(300px + 2rem);
+    height: calc(300px + 2rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
