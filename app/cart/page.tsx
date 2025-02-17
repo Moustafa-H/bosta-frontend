@@ -18,7 +18,7 @@ const CartPage = () => {
     return <p className='text-2xl'>Your Cart is empty.</p>
   else
     return (
-      <ul className='flex flex-col items-start gap-8'>
+      <ul className='flex flex-col items-start gap-8 px-4'>
         {items.map((item, index) => (
           <li key={index} className='flex items-center gap-8'>
             <div className='bg-white rounded-2xl w-[150px] h-[150px] flex justify-center items-center'>
@@ -59,7 +59,7 @@ const CartPage = () => {
             </section>
           </li>
         ))}
-        <li>Cart Total: ${ getTotal() }</li>
+        <li className='text-2xl'>Cart Total: ${ getTotal() }</li>
       </ul>
     )
 }
