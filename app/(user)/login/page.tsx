@@ -62,7 +62,8 @@ export default function Login() {
                     
                     setUsername(data.username)
                     
-                    router.replace('/')
+                    // router.replace('/')
+                    window.location.href = '/'
                 } else {
                     setSubmitError("Wrong password")
                 }

@@ -19,11 +19,6 @@ export function middleware(request: NextRequest) {
     if (protectedPath && !token) {
         return NextResponse.redirect(new URL('/login', request.nextUrl))
     }
-
-    // Disable caching for middleware responses
-    const response = NextResponse.next()
-    response.headers.set('Cache-Control', 'no-store')
-    return response
 }
 
 export const config = {

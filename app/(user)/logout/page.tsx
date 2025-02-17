@@ -15,7 +15,8 @@ const Logout = () => {
         destroyCookie(null, 'token')
         setUsername('')
         setItems([])
-        router.replace('/')
+        // router.replace('/')
+        window.location.href = '/'
     }, [router, destroyCookie])
 }
 
