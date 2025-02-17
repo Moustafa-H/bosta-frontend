@@ -10,9 +10,36 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import MoonLoader from "react-spinners/MoonLoader"
+import { useProductStore } from "@/stores/useProductsStore"
 
-export default function AllProducts({products}: {products: any}) {
+const itemsPerPage = 10
+
+export default function AllProducts() {
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const { products, setProducts } = useProductStore()
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('https://fakestoreapi.com/products')
+      setProducts(await response.json())
+    } catch (error) {
+      setError('Error fetching products, please try again later')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (products.length === 0) {
+      fetchProducts()
+    } else {
+      setLoading(false)
+    }
+  }, [products, setLoading])
+  
   const searchParams = useSearchParams()
   const sortParam = searchParams.get("sort")
 
@@ -22,32 +49,74 @@ export default function AllProducts({products}: {products: any}) {
     return a.category.localeCompare(b.category)
   })
 
-  const itemsPerPage = 5
   const [startIndex, setStartIndex] = useState(0)
-  const [endIndex, setEndIndex] = useState(5)
+  const [endIndex, setEndIndex] = useState(itemsPerPage)
 
+  if (loading)
+    return <MoonLoader />
+  else if (error.length > 0)
+    return <>{error}</>
+  else
+    return (
+      <>
+        <SortForm />
+
+        <PaginationComponent
+          startIndex={startIndex}
+          endIndex={endIndex}
+          setStartIndex={setStartIndex}
+          setEndIndex={setEndIndex}
+          productsLen={products.length}
+        />
+
+        { products.length === 0 ?
+          <>No products found.</>
+        :
+          <ul className="flex flex-wrap justify-evenly items-start gap-16 p-8">
+            {sortedProducts.slice(startIndex, endIndex).map((product: any) => (
+              <li key={product.id}>
+                <ProductCard
+                  id={product.id}
+                  category={product.category}
+                  imgSrc={product.image}
+                  name={product.title}
+                  price={product.price}
+                />
+              </li>
+            ))}
+          </ul>
+        }
+
+        <PaginationComponent
+          startIndex={startIndex}
+          endIndex={endIndex}
+          setStartIndex={setStartIndex}
+          setEndIndex={setEndIndex}
+          productsLen={products.length}
+        />
+      </>
+    )
+}
+
+const PaginationComponent = ({
+  startIndex,
+  endIndex,
+  setStartIndex,
+  setEndIndex,
+  productsLen,
+}: {
+  startIndex: number
+  endIndex: number
+  setStartIndex: Dispatch<SetStateAction<number>>
+  setEndIndex: Dispatch<SetStateAction<number>>
+  productsLen: number
+}) => {
   return (
-    <>
-    <SortForm />
-
-    <ul className="flex flex-wrap justify-evenly items-start gap-16 p-8">
-      {sortedProducts.slice(startIndex, endIndex).map((product: any) => (
-        <li key={product.id}>
-          <ProductCard
-            id={product.id}
-            category={product.category}
-            imgSrc={product.image}
-            name={product.title}
-            price={product.price}
-          />
-        </li>
-      ))}
-    </ul>
-
     <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+            className={ startIndex === 0 ? 'pointer-events-none' : 'cursor-pointer' }
             onClick={() => {
               setStartIndex(prev => prev - itemsPerPage)
               setEndIndex(prev => prev - itemsPerPage)
@@ -56,6 +125,7 @@ export default function AllProducts({products}: {products: any}) {
         </PaginationItem>
         <PaginationItem>
           <PaginationNext
+            className={ endIndex >= productsLen ? 'pointer-events-none' : 'cursor-pointer' }
             onClick={() => {
               setStartIndex(prev => prev + itemsPerPage)
               setEndIndex(prev => prev + itemsPerPage)
@@ -64,6 +134,5 @@ export default function AllProducts({products}: {products: any}) {
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-    </>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { Button } from '../ui/button';
 
 export default function SortForm() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function SortForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-4 p-4">
+    <form onSubmit={handleSubmit} className="flex items-center gap-8 p-4 bg-white rounded-xl mb-4">
         <label>
             <input
             type="radio"
@@ -29,7 +30,7 @@ export default function SortForm() {
             checked={sortMethod === 'category'}
             onChange={() => setSortMethod('category')}
             />
-            Category
+            &nbsp;Category
         </label>
 
         <label>
@@ -40,7 +41,7 @@ export default function SortForm() {
             checked={sortMethod === 'priceAsc'}
             onChange={() => setSortMethod('priceAsc')}
           />
-            Price (Ascending)
+            &nbsp;Price (Ascending)
         </label>
 
         <label>
@@ -51,10 +52,10 @@ export default function SortForm() {
             checked={sortMethod === 'priceDesc'}
             onChange={() => setSortMethod('priceDesc')}
             />
-            Price (Descending)
+            &nbsp;Price (Descending)
         </label>
 
-        <button type="submit">Sort</button>
+        <Button>Sort</Button>
     </form>
   );
 }
