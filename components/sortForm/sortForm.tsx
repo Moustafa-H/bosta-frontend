@@ -1,12 +1,12 @@
-'use client'; // Required for Next.js 13+ client components
+'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import { Button } from '../ui/button';
+import { useRouter, useSearchParams } from 'next/navigation'
+import { FormEvent, useState } from 'react'
+import { Button } from '../ui/button'
 
 export default function SortForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   // Get current sorting method from the URL
   const currentSort = searchParams.get('sort') || 'category';

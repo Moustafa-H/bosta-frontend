@@ -10,7 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, Suspense, useEffect, useState } from "react"
 import MoonLoader from "react-spinners/MoonLoader"
 import { useProductStore } from "@/stores/useProductsStore"
 
@@ -58,7 +58,7 @@ export default function AllProducts() {
     return <>{error}</>
   else
     return (
-      <>
+      <Suspense fallback={<div>Loading...</div>}>
         <SortForm />
 
         <PaginationComponent
@@ -94,7 +94,7 @@ export default function AllProducts() {
           setEndIndex={setEndIndex}
           productsLen={products.length}
         />
-      </>
+      </Suspense>
     )
 }
 
