@@ -7,18 +7,13 @@ import { Button } from '../ui/button'
 export default function SortForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const currentSort = searchParams.get('sort') || 'category'
+  const [sortMethod, setSortMethod] = useState(currentSort)
 
-  // Get current sorting method from the URL
-  const currentSort = searchParams.get('sort') || 'category';
-
-  // State to track the selected sorting method
-  const [sortMethod, setSortMethod] = useState(currentSort);
-
-  // Handle form submission
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault(); // Prevent page reload
-    router.push(`?sort=${sortMethod}`, { scroll: false });
-  };
+    e.preventDefault()
+    router.push(`?sort=${sortMethod}`, { scroll: false })
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-8 p-4 bg-white rounded-xl mb-4">
@@ -57,5 +52,5 @@ export default function SortForm() {
 
         <Button>Sort</Button>
     </form>
-  );
+  )
 }

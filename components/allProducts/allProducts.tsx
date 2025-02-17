@@ -17,6 +17,14 @@ import { useProductStore } from "@/stores/useProductsStore"
 const itemsPerPage = 10
 
 export default function AllProducts() {
+  return (
+    <Suspense fallback={<>Loading...</>}>
+      <Content />
+    </Suspense>
+  )
+}
+
+const Content = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const { products, setProducts } = useProductStore()
@@ -58,7 +66,7 @@ export default function AllProducts() {
     return <>{error}</>
   else
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <>
         <SortForm />
 
         <PaginationComponent
@@ -94,7 +102,7 @@ export default function AllProducts() {
           setEndIndex={setEndIndex}
           productsLen={products.length}
         />
-      </Suspense>
+      </>
     )
 }
 
