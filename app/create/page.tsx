@@ -48,7 +48,7 @@ export default function CreateProduct() {
         defaultValues: {
             title: "",
             description: "",
-            price: "0",
+            price: 0,
             category: "",
             image: "",
         },
