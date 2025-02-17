@@ -83,13 +83,7 @@ const Content = () => {
           <ul className="flex flex-wrap justify-evenly items-start gap-16 p-8">
             {sortedProducts.slice(startIndex, endIndex).map((product: any) => (
               <li key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  category={product.category}
-                  imgSrc={product.image}
-                  name={product.title}
-                  price={product.price}
-                />
+                <ProductCard product={ product } />
               </li>
             ))}
           </ul>

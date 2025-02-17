@@ -4,19 +4,23 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useUserStore } from '@/stores/useUserStore'
 import { parseCookies } from 'nookies'
+import { useCartStore } from '@/stores/useCartStore'
 
 const Navbar = () => {
   const [loading, setLoading] = useState(true)
   const { username, setUsername } = useUserStore()
+  const { setItems } = useCartStore()
 
   useEffect(() => {
     if (username.length === 0) {
       const foundUsername = parseCookies().token
       if (foundUsername)
         setUsername(foundUsername)
+      else
+        setItems([])
     }
     setLoading(false)
-  }, [username, setUsername, setLoading])
+  }, [username, setUsername, setLoading, setItems])
   
   return (
     <header className='fixed top-0 left-0 w-screen h-[60px] bg-gray-600 text-white flex justify-evenly items-center z-50'>

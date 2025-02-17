@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import MoonLoader from "react-spinners/MoonLoader"
 import { Badge } from "@/components/ui/badge"
 import { ProductType, useProductStore } from "@/stores/useProductsStore"
+import AddToCartButton from "@/components/addToCartButton/addToCartButton"
 
 const SingleProduct = ({
   params
@@ -59,6 +60,7 @@ const SingleProduct = ({
           <h1 className='text-3xl'>{product.title}</h1>
           <p className='text-lg'>{product.description}</p>
           <p className='text-2xl'>${product.price}</p>
+          <AddToCartButton product={product} />
         </div>
       </>
     )

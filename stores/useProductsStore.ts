@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
 export interface ProductType {
-    id: number
-    title: string
-    price: number
-    category: string
-    description: string
-    image: string
+  id: number
+  title: string
+  price: number
+  category: string
+  description: string
+  image: string
 }
 
 interface ProductStore {
